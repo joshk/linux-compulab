@@ -506,16 +506,24 @@ void iwl_dbg_tlv_load_bin(struct device *dev, struct iwl_trans *trans)
 	int res;
 
 	if (!iwlwifi_mod_params.enable_ini ||
-	    trans->trans_cfg->device_family <= IWL_DEVICE_FAMILY_8000)
+	    trans->trans_cfg->device_family <= IWL_DEVICE_FAMILY_8000) {
+		IWL_INFO(trans, "JOSHDEBUG: escaping iwl_dbg_tlv_load_bin early\n");
 		return;
+	}
+
+	IWL_INFO(trans, "JOSHDEBUG: deep in iwl_dbg_tlv_load_bin\n");
 
 	res = firmware_request_nowarn(&fw, yoyo_bin, dev);
 	IWL_DEBUG_FW(trans, "%s %s\n", res ? "didn't load" : "loaded", yoyo_bin);
+
+	IWL_INFO(trans, "JOSHDEBUG: finished firmware_request_nowarn in iwl_dbg_tlv_load_bin\n");
 
 	if (res)
 		return;
 
 	iwl_dbg_tlv_parse_bin(trans, fw->data, fw->size);
+
+	IWL_INFO(trans, "JOSHDEBUG: finished iwl_dbg_tlv_parse_bin in iwl_dbg_tlv_load_bin\n");
 
 	release_firmware(fw);
 }
