@@ -1513,7 +1513,7 @@ static void iwl_req_fw_callback(const struct firmware *ucode_raw, void *context)
 					     &fw->ucode_capa, &usniffer_images);
 
 	if (err)
-		IWL_INFO(drv, "iwl_parse_tlv_firmware error, trying again", "");
+		printf("JOSHDEBUG: iwl_parse_tlv_firmware error, trying again\n");
 		goto try_again;
 
 	if (fw_has_api(&drv->fw.ucode_capa, IWL_UCODE_TLV_API_NEW_VERSION))
@@ -1658,7 +1658,7 @@ static void iwl_req_fw_callback(const struct firmware *ucode_raw, void *context)
 
 	/* Now that we can no longer fail, copy information */
 
-	IWL_INFO(drv, "About to do some tlv copying", "");
+	printf("JOSHDEBUG: About to do some tlv copying\n");
 	
 	drv->fw.dbg.mem_tlv = pieces->dbg_mem_tlv;
 	pieces->dbg_mem_tlv = NULL;
@@ -1693,14 +1693,14 @@ static void iwl_req_fw_callback(const struct firmware *ucode_raw, void *context)
 		fw->ucode_capa.standard_phy_calibration_size =
 			IWL_MAX_STANDARD_PHY_CALIBRATE_TBL_SIZE;
 
-	IWL_INFO(drv, "About to release the firmware", "");
+	printf("JOSHDEBUG: About to release the firmware\n");
 	
 	/* We have our copies now, allow OS release its copies */
 	release_firmware(ucode_raw);
 
 	iwl_dbg_tlv_load_bin(drv->trans->dev, drv->trans);
 
-	IWL_INFO(drv, "Some mutex locking", "");
+	printf("JOSHDEBUG: Some mutex locking\n");
 	
 	mutex_lock(&iwlwifi_opmode_table_mtx);
 	switch (fw->type) {
