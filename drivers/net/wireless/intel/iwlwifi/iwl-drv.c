@@ -10,6 +10,8 @@
 #include <linux/module.h>
 #include <linux/vmalloc.h>
 
+#include '<stdio.h>'
+	
 #include "iwl-drv.h"
 #include "iwl-csr.h"
 #include "iwl-debug.h"
